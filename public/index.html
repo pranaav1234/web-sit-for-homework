@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZOTO – Trusted Home Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;color:#1a1a18;background:#fff}
+h1,h2,h3,.logo{font-family:'Sora',sans-serif}
+
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:64px;border-bottom:1px solid #eee;position:sticky;top:0;background:#fff;z-index:200}
+.logo{font-size:20px;font-weight:600}.logo em{color:#1a9e5c;font-style:normal}
+.nav-links{display:flex;gap:28px;list-style:none;font-size:14px;color:#555}
+.nav-links a{text-decoration:none;color:#555}.nav-links a:hover{color:#1a9e5c}
+.nav-actions{display:flex;gap:10px}
+.btn{padding:8px 20px;border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;border:1px solid #ddd;background:#fff;color:#1a1a18;transition:.15s}
+.btn:hover{background:#f5f5f5}
+.btn-primary{background:#1a9e5c;color:#fff;border-color:#1a9e5c}
+.btn-primary:hover{background:#158a4e}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#f0faf4 0%,#e6f7ed 50%,#f4fbf6 100%);padding:60px 40px 50px;text-align:center;position:relative;overflow:hidden}
+.hero-deco-left{position:absolute;left:-20px;top:20px;width:160px;opacity:0.5}
+.hero-deco-right{position:absolute;right:20px;top:10px;width:80px;opacity:0.5}
+.hero h1{font-size:44px;font-weight:700;line-height:1.15;margin-bottom:0px;letter-spacing:-1.5px;color:#1a1a18}
+.hero h1 span{background:linear-gradient(135deg,#1a9e5c,#34c478);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:15px;color:#888;margin-bottom:32px;margin-top:8px}
+
+.search-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.loc-box{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #ddd;border-radius:8px;padding:10px 16px;min-width:220px;cursor:pointer}
+.loc-icon{color:#1a9e5c;font-size:16px}
+.loc-main{font-size:14px;font-weight:500}
+.loc-sub{font-size:11px;color:#888}
+.loc-arrow{margin-left:auto;color:#888;font-size:12px}
+.search-box{display:flex;align-items:center;background:#fff;border:1px solid #ddd;border-radius:8px;padding:10px 16px;min-width:340px;gap:10px}
+.search-box input{border:none;outline:none;font-size:14px;flex:1;font-family:'DM Sans',sans-serif;color:#1a1a18}
+.search-box input::placeholder{color:#aaa}
+.search-icon{color:#1a9e5c;font-size:16px;cursor:pointer}
+
+/* SERVICES SECTION */
+.services-section{padding:48px 40px}
+.services-section h2{font-size:20px;font-weight:600;margin-bottom:24px;text-align:center}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:16px;max-width:640px;margin:0 auto}
+.svc-card{background:#fff;border:1px solid #e8e8e8;border-radius:10px;padding:20px 12px 16px;text-align:center;cursor:pointer;transition:.2s}
+.svc-card:hover{border-color:#1a9e5c;transform:translateY(-3px);box-shadow:0 4px 16px rgba(26,158,92,0.12)}
+.svc-card-icon{font-size:36px;margin-bottom:10px;display:block}
+.svc-card-name{font-size:13px;font-weight:500;color:#1a1a18;line-height:1.4}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:1000;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:12px;width:90%;max-width:680px;max-height:85vh;overflow-y:auto;position:relative}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid #eee;position:sticky;top:0;background:#fff;z-index:10}
+.modal-header h3{font-size:17px;font-weight:600}
+.modal-close{background:none;border:none;font-size:20px;cursor:pointer;color:#555;line-height:1;padding:4px 8px}
+.modal-close:hover{color:#1a1a18}
+.modal-body{padding:20px 24px 28px}
+.sub-group{margin-bottom:28px}
+.sub-group h4{font-size:14px;font-weight:600;color:#1a9e5c;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #c6edd7}
+.sub-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:14px}
+.sub-card{cursor:pointer;border-radius:10px;overflow:hidden;border:1px solid #eee;transition:.15s}
+.sub-card:hover{border-color:#1a9e5c;box-shadow:0 2px 10px rgba(26,158,92,0.12)}
+.sub-card-img{width:100%;height:90px;object-fit:cover;background:#f0f6ff;display:flex;align-items:center;justify-content:center;font-size:32px}
+.sub-card-label{font-size:12px;font-weight:500;text-align:center;padding:8px 6px;color:#1a1a18;line-height:1.4}
+
+/* HOW IT WORKS */
+.how-section{background:#f0faf4;border-top:1px solid #c6edd7;border-bottom:1px solid #c6edd7;padding:48px 40px}
+.how-section h2{font-size:20px;font-weight:600;text-align:center;margin-bottom:32px}
+.how-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:20px;max-width:900px;margin:0 auto}
+.how-card{text-align:center;padding:20px 16px}
+.how-num{width:40px;height:40px;border-radius:50%;background:#e6f7ed;border:1.5px solid #9adcb8;display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-size:16px;font-weight:600;color:#1a9e5c;margin:0 auto 14px}
+.how-card h4{font-size:14px;font-weight:600;margin-bottom:6px}
+.how-card p{font-size:13px;color:#666;line-height:1.6}
+
+/* TRUST BAND */
+.trust-band{display:flex;justify-content:center;gap:48px;flex-wrap:wrap;padding:32px 40px;border-bottom:1px solid #eee}
+.trust-item{text-align:center}
+.trust-val{font-family:'Sora',sans-serif;font-size:24px;font-weight:600;color:#1a9e5c}
+.trust-lbl{font-size:12px;color:#777;margin-top:2px}
+
+/* PRO CTA */
+.pro-cta{background:#1a1a18;padding:48px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.pro-cta h3{font-family:'Sora',sans-serif;font-size:20px;font-weight:600;color:#fff;margin-bottom:6px}
+.pro-cta p{font-size:14px;color:rgba(255,255,255,0.6)}
+
+/* FOOTER */
+footer{background:#111;color:rgba(255,255,255,0.5);padding:40px 40px 24px}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;margin-bottom:32px}
+.footer-logo{font-family:'Sora',sans-serif;font-size:18px;font-weight:600;color:#fff;margin-bottom:10px}
+.footer-logo em{color:#1a9e5c;font-style:normal}
+.footer-desc{font-size:13px;line-height:1.7}
+.footer-col h4{color:#fff;font-size:13px;font-weight:600;margin-bottom:12px;font-family:'Sora',sans-serif}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:8px;font-size:13px}
+.footer-col li{cursor:pointer}.footer-col li:hover{color:#fff}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:18px;display:flex;justify-content:space-between;font-size:12px;flex-wrap:wrap;gap:8px}
+.cities-line{font-size:12px;color:rgba(255,255,255,0.3);margin-bottom:12px}
+
+@media(max-width:768px){
+  nav{padding:0 16px}.nav-links{display:none}
+  .hero{padding:40px 16px 36px}.hero h1{font-size:26px}
+  .search-row{flex-direction:column;align-items:center}.search-box{min-width:280px}
+  .services-section{padding:32px 16px}
+  .how-section,.trust-band,.pro-cta{padding:32px 16px}
+  footer{padding:32px 16px 20px}.footer-top{grid-template-columns:1fr}
+}
+
+/* AUTH FORMS */
+.form-group{margin-bottom:16px}
+.form-label{display:block;font-size:13px;font-weight:500;color:#444;margin-bottom:6px}
+.input-with-icon{display:flex;align-items:center;gap:10px;background:#f9f9f9;border:1px solid #e0e0e0;border-radius:8px;padding:10px 14px;transition:.15s}
+.input-with-icon:focus-within{border-color:#1a9e5c;background:#fff;box-shadow:0 0 0 3px rgba(26,158,92,0.1)}
+.input-icon{font-size:16px;flex-shrink:0}
+.form-input{border:none;outline:none;font-size:14px;font-family:'DM Sans',sans-serif;background:transparent;color:#1a1a18;width:100%}
+.form-input::placeholder{color:#bbb}
+.form-btn{width:100%;padding:12px;background:#1a9e5c;color:#fff;border:none;border-radius:8px;font-size:15px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;margin-top:6px;transition:.15s}
+.form-btn:hover{background:#158a4e}
+.form-switch{text-align:center;font-size:13px;color:#777;margin-top:14px}
+.form-switch a{color:#1a9e5c;cursor:pointer;font-weight:500}
+.form-switch a:hover{text-decoration:underline}
+
+/* LOCATION MODAL */
+.loc-modal{max-width:500px}
+.loc-modal-city{font-size:18px;font-weight:600;color:#1a1a18}
+.loc-modal-change{font-size:13px;color:#1a9e5c;cursor:pointer;margin-left:8px;font-weight:500}
+.loc-modal-change:hover{text-decoration:underline}
+.loc-search-box{display:flex;align-items:center;gap:10px;border:1px solid #ddd;border-radius:8px;padding:11px 14px;margin-bottom:14px;transition:.15s}
+.loc-search-box:focus-within{border-color:#1a9e5c;box-shadow:0 0 0 3px rgba(26,158,92,0.1)}
+.loc-search-box input{border:none;outline:none;font-size:14px;font-family:'DM Sans',sans-serif;color:#1a1a18;flex:1}
+.loc-search-box input::placeholder{color:#bbb}
+.loc-detect-btn{display:flex;align-items:center;gap:8px;color:#1a9e5c;font-size:14px;font-weight:500;cursor:pointer;padding:10px 0;border-bottom:1px solid #f0f0f0;margin-bottom:16px}
+.loc-detect-btn:hover{color:#158a4e}
+.loc-detect-icon{font-size:16px}
+.loc-city-list{display:flex;flex-direction:column;gap:4px}
+.loc-city-option{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;font-size:14px;transition:.15s}
+.loc-city-option:hover{background:#f0faf4}
+.loc-city-option.active{background:#e6f7ed;color:#1a9e5c;font-weight:500}
+.loc-empty{text-align:center;padding:40px 20px;color:#999}
+.loc-empty-icon{font-size:40px;margin-bottom:10px;color:#ccc}
+.loc-empty p{font-size:13px;line-height:1.6}
+.loc-detecting{text-align:center;padding:20px;font-size:13px;color:#1a9e5c}
+
+/* OTP LOGIN */
+.otp-boxes{display:flex;gap:10px;justify-content:center;margin-bottom:16px}
+.otp-input{width:46px;height:52px;text-align:center;font-size:20px;font-weight:600;font-family:'Sora',sans-serif;border:1.5px solid #ddd;border-radius:10px;outline:none;color:#1a1a18;transition:.15s;background:#f9f9f9}
+.otp-input:focus{border-color:#1a9e5c;background:#fff;box-shadow:0 0 0 3px rgba(26,158,92,0.1)}
+.otp-input.filled{border-color:#1a9e5c;background:#e6f7ed;color:#158a4e}
+.otp-input.error{border-color:#e74c3c;background:#fff0f0}
+
+/* ── SERVICE DETAIL PAGE ── */
+#service-page{display:none;position:fixed;inset:0;background:#f5f5f5;z-index:900;overflow-y:auto}
+.sp-nav{background:#fff;border-bottom:1px solid #eee;padding:0 24px;height:56px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
+.sp-back{background:none;border:none;font-size:22px;cursor:pointer;color:#333;padding:4px 8px;border-radius:6px}
+.sp-back:hover{background:#f0f0f0}
+.sp-nav-title{font-size:15px;font-weight:600;font-family:'Sora',sans-serif}
+.sp-body{display:grid;grid-template-columns:1fr 340px;gap:20px;max-width:1100px;margin:0 auto;padding:20px 24px 60px}
+.sp-left{}
+.sp-right{}
+
+/* Location bar */
+.sp-loc{background:#fff;border:1px solid #eee;border-radius:10px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.sp-loc-icon{color:#1a9e5c;font-size:18px}
+.sp-loc-city{font-size:14px;font-weight:600}
+.sp-loc-area{font-size:12px;color:#888}
+
+/* Service header */
+.sp-header{background:#fff;border:1px solid #eee;border-radius:10px;padding:0;margin-bottom:16px;overflow:hidden}
+.sp-header-img{width:100%;height:200px;object-fit:cover;background:linear-gradient(135deg,#e6f7ed,#c6edd7);display:flex;align-items:center;justify-content:center;font-size:64px}
+.sp-header-info{padding:16px}
+.sp-header-title{font-size:18px;font-weight:600;font-family:'Sora',sans-serif;margin-bottom:4px}
+.sp-header-rating{display:flex;align-items:center;gap:6px;font-size:13px;color:#555}
+.sp-star{color:#f59e0b}
+.sp-what{font-size:13px;font-weight:600;color:#333;margin:12px 0 8px;padding-top:12px;border-top:1px solid #f0f0f0}
+
+/* Package cards */
+.sp-section-title{font-size:15px;font-weight:600;font-family:'Sora',sans-serif;margin:0 0 12px;padding-bottom:8px;border-bottom:2px solid #1a9e5c;display:inline-block}
+.sp-packages{display:flex;flex-direction:column;gap:16px;margin-bottom:20px}
+.sp-pkg{background:#fff;border:1px solid #eee;border-radius:10px;padding:16px;display:flex;gap:14px;align-items:flex-start}
+.sp-pkg:hover{border-color:#1a9e5c;box-shadow:0 2px 10px rgba(26,158,92,0.08)}
+.sp-pkg-img{width:110px;height:90px;border-radius:8px;background:#f0faf4;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:36px;overflow:hidden;object-fit:cover}
+.sp-pkg-info{flex:1}
+.sp-pkg-name{font-size:14px;font-weight:600;margin-bottom:3px}
+.sp-pkg-rating{font-size:12px;color:#888;margin-bottom:4px}
+.sp-pkg-price{font-size:15px;font-weight:600;color:#1a1a18;margin-bottom:2px}
+.sp-pkg-time{font-size:12px;color:#888;margin-bottom:8px}
+.sp-pkg-points{list-style:disc;padding-left:16px;font-size:12px;color:#555;line-height:1.7}
+.sp-show-more{font-size:12px;color:#1a9e5c;cursor:pointer;font-weight:500;margin-top:4px;display:inline-block}
+.sp-pkg-add{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px}
+.sp-add-btn{padding:7px 20px;border:1.5px solid #1a9e5c;border-radius:8px;background:#fff;color:#1a9e5c;font-size:13px;font-weight:600;cursor:pointer;transition:.15s;font-family:'DM Sans',sans-serif}
+.sp-add-btn:hover{background:#1a9e5c;color:#fff}
+.sp-add-btn.added{background:#1a9e5c;color:#fff}
+.sp-qty{display:none;align-items:center;gap:6px}
+.sp-qty.show{display:flex}
+.sp-qty-btn{width:28px;height:28px;border-radius:50%;border:1.5px solid #1a9e5c;background:#fff;color:#1a9e5c;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:600}
+.sp-qty-btn:hover{background:#1a9e5c;color:#fff}
+.sp-qty-num{font-size:15px;font-weight:600;min-width:20px;text-align:center}
+.sp-pkg-opts{font-size:11px;color:#888;text-align:center}
+
+/* Right panel */
+.sp-cart{background:#fff;border:1px solid #eee;border-radius:10px;padding:20px;margin-bottom:16px;text-align:center;position:sticky;top:76px}
+.sp-cart-empty{color:#aaa;padding:20px 0}
+.sp-cart-icon{font-size:36px;margin-bottom:8px;opacity:0.4}
+.sp-cart-items{text-align:left;display:none}
+.sp-cart-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
+.sp-cart-item:last-child{border-bottom:none}
+.sp-cart-item-name{flex:1;font-weight:500}
+.sp-cart-item-qty{color:#888;font-size:12px;margin:0 8px}
+.sp-cart-item-price{font-weight:600}
+
+/* Payment summary */
+.sp-payment{background:#fff;border:1px solid #eee;border-radius:10px;padding:20px;margin-bottom:16px;display:none}
+.sp-payment-title{font-size:15px;font-weight:600;font-family:'Sora',sans-serif;margin-bottom:14px}
+.sp-pay-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;color:#555}
+.sp-pay-row.total{font-weight:600;color:#1a1a18;font-size:14px;border-top:1px dashed #ddd;margin-top:6px;padding-top:10px}
+.sp-pay-row.advance{color:#1a9e5c;font-weight:600}
+.sp-pay-note{font-size:11px;color:#888;margin-top:2px}
+
+/* Offers */
+.sp-offers{background:#fff;border:1px solid #eee;border-radius:10px;padding:16px;margin-bottom:16px}
+.sp-offer-item{display:flex;align-items:center;gap:10px;font-size:13px;padding:8px 0;border-bottom:1px solid #f5f5f5}
+.sp-offer-item:last-child{border-bottom:none}
+.sp-offer-badge{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.sp-why{background:#fff;border:1px solid #eee;border-radius:10px;padding:16px;margin-bottom:16px}
+.sp-why-title{font-size:14px;font-weight:600;font-family:'Sora',sans-serif;margin-bottom:12px}
+.sp-why-item{display:flex;align-items:center;gap:10px;font-size:13px;padding:7px 0;color:#444}
+.sp-why-icon{font-size:18px}
+
+/* Booking section */
+.sp-booking{background:#fff;border:1px solid #eee;border-radius:10px;padding:16px;margin-bottom:16px}
+.sp-book-section{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #f0f0f0}
+.sp-book-section:last-child{border-bottom:none}
+.sp-book-icon{width:36px;height:36px;background:#f5f5f5;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.sp-book-label{font-size:13px;font-weight:600;margin-bottom:2px}
+.sp-book-val{font-size:12px;color:#888}
+.sp-slot-btn{width:100%;padding:11px;background:#1a9e5c;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;margin-top:10px;transition:.15s}
+.sp-slot-btn:hover{background:#158a4e}
+.sp-pay-btn{width:100%;padding:13px;background:#ccc;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:not-allowed;transition:.15s}
+.sp-pay-btn.active{background:#1a9e5c;cursor:pointer}
+.sp-pay-btn.active:hover{background:#158a4e}
+
+/* Notes */
+.sp-notes{background:#fffbea;border:1px solid #fde68a;border-radius:10px;padding:14px 16px;margin-bottom:16px;font-size:13px}
+.sp-notes-title{font-weight:600;margin-bottom:8px}
+.sp-notes ul{padding-left:16px;line-height:1.8;color:#555}
+
+/* Date picker modal */
+.slot-modal{background:#fff;border-radius:14px;width:90%;max-width:500px;padding:24px;position:relative;z-index:1101}
+.slot-modal h3{font-size:16px;font-weight:600;margin-bottom:16px;font-family:'Sora',sans-serif}
+.slot-dates{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:16px}
+.slot-date{flex-shrink:0;padding:8px 14px;border:1.5px solid #eee;border-radius:8px;text-align:center;cursor:pointer;min-width:60px}
+.slot-date.active{border-color:#1a9e5c;background:#e6f7ed}
+.slot-date-day{font-size:11px;color:#888}
+.slot-date-num{font-size:16px;font-weight:600}
+.slot-times{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.slot-time{padding:10px 8px;border:1.5px solid #eee;border-radius:8px;text-align:center;font-size:13px;cursor:pointer}
+.slot-time.active{border-color:#1a9e5c;background:#e6f7ed;color:#1a9e5c;font-weight:600}
+.slot-time.disabled{color:#ccc;cursor:not-allowed;background:#fafafa}
+.slot-confirm-btn{width:100%;padding:12px;background:#1a9e5c;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer}
+
+@media(max-width:768px){
+  .sp-body{grid-template-columns:1fr}
+  .sp-cart{position:static}
+  .sp-right{order:-1}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">ZOTO</div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#pro">For professionals</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="btn" onclick="openModal('login')">Log in</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  
+  
+
+  <h1>The best professionals<br><span>for your home</span></h1>
+  <div style="width:60px;height:4px;background:linear-gradient(90deg,#1a9e5c,#34c478);border-radius:4px;margin:14px auto 6px;"></div>
+  <p class="hero-sub">Quality home services in Bangalore, Chennai &amp; Coimbatore</p>
+
+  <div class="search-row">
+    <div class="loc-box" onclick="openModal('location')" style="cursor:pointer">
+      <span class="loc-icon">📍</span>
+      <div style="flex:1">
+        <div class="loc-sub">Select your location</div>
+        <div id="selected-city" style="font-size:14px;font-weight:500;color:#1a1a18">Chennai</div>
+      </div>
+      <span style="font-size:12px;color:#888">▼</span>
+    </div>
+    <div class="search-box">
+      <input type="text" id="search-input" placeholder="What service do you need?">
+      <span class="search-icon" onclick="doSearch()">🔍</span>
+    </div>
+  </div>
+</div>
+
+<!-- SUMMER OFFER BANNER -->
+<div style="width:100%;background:#fff;padding:0 0 0 0;overflow:hidden">
+  <img src="summer-offer.png" alt="Summer Offers" style="width:100%;max-height:340px;object-fit:cover;display:block">
+</div>
+
+<!-- SERVICES -->
+<section class="services-section" id="services">
+  <h2>Our services</h2>
+  <div class="services-grid">
+    <div class="svc-card" onclick="openModal('appliance')">
+      <img src="card-appliance-repair.jpg" style="width:64px;height:64px;border-radius:12px;object-fit:cover;margin:0 auto 10px;display:block" alt="Appliance Repair">
+      <div class="svc-card-name">Appliance Repair</div>
+    </div>
+    <div class="svc-card" onclick="openModal('cleaning')">
+      <img src="card-cleaning.jpg" style="width:64px;height:64px;border-radius:12px;object-fit:cover;margin:0 auto 10px;display:block" alt="Cleaning">
+      <div class="svc-card-name">Cleaning &amp; Pest Control</div>
+    </div>
+  </div>
+</section>
+
+<!-- MODAL: APPLIANCE REPAIR -->
+<div class="modal-overlay" id="modal-appliance">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Appliance Repair</h3>
+      <button class="modal-close" onclick="closeModal('appliance')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="sub-group">
+        <h4>All Appliance &amp; Repair Services</h4>
+        <div class="sub-grid">
+          <div class="sub-card" onclick="handleSubCard(this)">
+            <img class="sub-card-img" src="sub-ac-repair.jpg" alt="AC Repair" style="width:100%;height:90px;object-fit:cover">
+            <div class="sub-card-label">AC Repair &amp; Services</div>
+          </div>
+          <div class="sub-card" onclick="handleSubCard(this)">
+            <img class="sub-card-img" src="sub-ac-repair.jpg" alt="Geyser" style="width:100%;height:90px;object-fit:cover;filter:hue-rotate(200deg)">
+            <div class="sub-card-label">Geyser Repair &amp; Services</div>
+          </div>
+          <div class="sub-card" onclick="handleSubCard(this)">
+            <img class="sub-card-img" src="sub-cleaning.jpg" alt="Water Purifier" style="width:100%;height:90px;object-fit:cover">
+            <div class="sub-card-label">Water Purifier &amp; Services</div>
+          </div>
+          <div class="sub-card" onclick="handleSubCard(this)">
+            <img class="sub-card-img" src="sub-tv-repair.jpg" alt="TV Repair" style="width:100%;height:90px;object-fit:cover">
+            <div class="sub-card-label">TV Repair &amp; Services</div>
+          </div>
+          <div class="sub-card" onclick="handleSubCard(this)">
+            <img class="sub-card-img" src="sub-chimney.jpg" alt="Chimney" style="width:100%;height:90px;object-fit:cover">
+            <div class="sub-card-label">Chimney Repair &amp; Services</div>
+          </div>
+          <div class="sub-card" onclick="handleSubCard(this)">
+            <img class="sub-card-img" src="sub-chimney.jpg" alt="Gas Stove" style="width:100%;height:90px;object-fit:cover;filter:hue-rotate(30deg)">
+            <div class="sub-card-label">Gas Stove &amp; Hob Services</div>
+          </div>
+          <div class="sub-card" onclick="handleSubCard(this)">
+            <img class="sub-card-img" src="sub-microwave.jpg" alt="Microwave" style="width:100%;height:90px;object-fit:cover">
+            <div class="sub-card-label">Microwave Repair &amp; Services</div>
+          </div>
+          <div class="sub-card" onclick="handleSubCard(this)">
+            <img class="sub-card-img" src="sub-fridge.jpg" alt="Refrigerator" style="width:100%;height:90px;object-fit:cover">
+            <div class="sub-card-label">Refrigerator Repair &amp; Services</div>
+          </div>
+          <div class="sub-card" onclick="handleSubCard(this)">
+            <img class="sub-card-img" src="sub-cleaning.jpg" alt="Washing Machine" style="width:100%;height:90px;object-fit:cover;filter:hue-rotate(180deg)">
+            <div class="sub-card-label">Washing Machine Repair</div>
+          </div>
+          <div class="sub-card" onclick="handleSubCard(this)">
+            <img class="sub-card-img" src="sub-geyser.jpg" alt="Gas Pipeline" style="width:100%;height:90px;object-fit:cover">
+            <div class="sub-card-label">Gas Pipeline Services</div>
+          </div>
+          <div class="sub-card" onclick="handleSubCard(this)">
+            <img class="sub-card-img" src="sub-cctv.jpg" alt="CCTV" style="width:100%;height:90px;object-fit:cover">
+            <div class="sub-card-label">CCTV Camera Installation &amp; Repair</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: CLEANING & PEST CONTROL -->
+<div class="modal-overlay" id="modal-cleaning">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Cleaning &amp; Pest Control</h3>
+      <button class="modal-close" onclick="closeModal('cleaning')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="sub-group">
+        <h4>Cleaning</h4>
+        <div class="sub-grid">
+          <div class="sub-card" onclick="handleSubCard(this)">
+            <img class="sub-card-img" src="sub-cleaning.jpg" alt="House Cleaning" style="width:100%;height:90px;object-fit:cover">
+            <div class="sub-card-label">Full House Cleaning</div>
+          </div>
+          <div class="sub-card" onclick="handleSubCard(this)">
+            <img class="sub-card-img" src="sub-bathroom.jpg" alt="Bathroom" style="width:100%;height:90px;object-fit:cover">
+            <div class="sub-card-label">Bathroom Cleaning</div>
+          </div>
+          <div class="sub-card" onclick="handleSubCard(this)">
+            <img class="sub-card-img" src="sub-chimney.jpg" alt="Kitchen" style="width:100%;height:90px;object-fit:cover;filter:saturate(1.2)">
+            <div class="sub-card-label">Kitchen Cleaning</div>
+          </div>
+          <div class="sub-card" onclick="handleSubCard(this)">
+            <img class="sub-card-img" src="sub-sofa.jpg" alt="Sofa" style="width:100%;height:90px;object-fit:cover">
+            <div class="sub-card-label">Sofa, Carpet &amp; Mattress Cleaning</div>
+          </div>
+          <div class="sub-card" onclick="handleSubCard(this)">
+            <img class="sub-card-img" src="sub-geyser.jpg" alt="Water Tank" style="width:100%;height:90px;object-fit:cover;filter:hue-rotate(180deg)">
+            <div class="sub-card-label">Water Tank &amp; Sump Cleaning</div>
+          </div>
+          <div class="sub-card" onclick="handleSubCard(this)">
+            <img class="sub-card-img" src="sub-marble.jpg" alt="Marble" style="width:100%;height:90px;object-fit:cover">
+            <div class="sub-card-label">Marble Polishing</div>
+          </div>
+        </div>
+      </div>
+      <div class="sub-group">
+        <h4>Pest Control</h4>
+        <div class="sub-grid">
+          <div class="sub-card" onclick="handleSubCard(this)">
+            <img class="sub-card-img" src="sub-pest.jpg" alt="Pest Control" style="width:100%;height:90px;object-fit:cover">
+            <div class="sub-card-label">Pest Control</div>
+          </div>
+          <div class="sub-card" onclick="handleSubCard(this)">
+            <img class="sub-card-img" src="sub-pest.jpg" alt="Cockroach" style="width:100%;height:90px;object-fit:cover;filter:hue-rotate(90deg)">
+            <div class="sub-card-label">Cockroach Control</div>
+          </div>
+          <div class="sub-card" onclick="handleSubCard(this)">
+            <img class="sub-card-img" src="sub-pest.jpg" alt="Bed Bug" style="width:100%;height:90px;object-fit:cover;filter:hue-rotate(200deg)">
+            <div class="sub-card-label">Bed Bug Control</div>
+          </div>
+          <div class="sub-card" onclick="handleSubCard(this)">
+            <img class="sub-card-img" src="sub-pest.jpg" alt="Rodent" style="width:100%;height:90px;object-fit:cover;filter:sepia(0.5)">
+            <div class="sub-card-label">Rodent Control</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <h2>How it works</h2>
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="how-num">1</div>
+      <h4>Choose a service</h4>
+      <p>Browse our service categories and pick what you need</p>
+    </div>
+    <div class="how-card">
+      <div class="how-num">2</div>
+      <h4>Select your city</h4>
+      <p>Available in Chennai, Coimbatore and Bangalore</p>
+    </div>
+    <div class="how-card">
+      <div class="how-num">3</div>
+      <h4>Book a professional</h4>
+      <p>Compare verified pros, ratings and transparent pricing</p>
+    </div>
+    <div class="how-card">
+      <div class="how-num">4</div>
+      <h4>Get it done</h4>
+      <p>Pro arrives at your doorstep. Pay securely after completion</p>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST STATS -->
+<div class="trust-band">
+  <div class="trust-item"><div class="trust-val">10,000+</div><div class="trust-lbl">Happy customers</div></div>
+  <div class="trust-item"><div class="trust-val">500+</div><div class="trust-lbl">Verified professionals</div></div>
+  <div class="trust-item"><div class="trust-val">4.8★</div><div class="trust-lbl">Average rating</div></div>
+  <div class="trust-item"><div class="trust-val">3</div><div class="trust-lbl">Cities served</div></div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">ZOTO</div>
+      <p class="footer-desc">Your trusted partner for home services. Connecting homeowners with verified professionals.<br><br>ZOTO Private Limited</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li>Appliance Repair</li>
+        <li>AC &amp; Geyser Repair</li>
+        <li>Full House Cleaning</li>
+        <li>Pest Control</li>
+        <li>Cockroach Control</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li>About us</li>
+        <li>Careers</li>
+        <li>Contact</li>
+        <li>For professionals</li>
+        <li>Privacy policy</li>
+      </ul>
+    </div>
+  </div>
+  <div class="cities-line">Available in: Chennai · Coimbatore · Bangalore</div>
+  <div class="footer-bottom">
+    <span>© 2026 ZOTO Private Limited</span>
+    <span>Privacy Policy · Terms of Service</span>
+  </div>
+</footer>
+
+<script>
+function handleSubCard(el) {
+  var name = el.querySelector('.sub-card-label').textContent.trim();
+  name = name.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+  document.querySelectorAll('.modal-overlay').forEach(function(m) {
+    m.classList.remove('open');
+  });
+  document.body.style.overflow = '';
+  openServicePage(name);
+}
+
+function openModal(id) {
+  document.getElementById('modal-' + id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById('modal-' + id).classList.remove('open');
+  // Only restore scroll if service page is closed
+  if (document.getElementById('service-page').style.display !== 'block') {
+    document.body.style.overflow = '';
+  }
+}
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', function(e) {
+    if (e.target === this) {
+      this.classList.remove('open');
+      // Only restore scroll if service page is also closed
+      if (document.getElementById('service-page').style.display !== 'block') {
+        document.body.style.overflow = '';
+      }
+    }
+  });
+});
+
+function updateCity() {}
+
+function doSearch() {
+  const q = document.getElementById('search-input').value.trim().toLowerCase();
+  if (!q) return;
+  if (q.includes('ac') || q.includes('fridge') || q.includes('tv') || q.includes('wash') || q.includes('appli') || q.includes('repair') || q.includes('geyser') || q.includes('microwave')) {
+    openModal('appliance');
+  } else if (q.includes('clean') || q.includes('pest') || q.includes('cockroach') || q.includes('rat') || q.includes('rodent') || q.includes('sofa') || q.includes('carpet') || q.includes('bathroom') || q.includes('kitchen')) {
+    openModal('cleaning');
+  } else {
+    alert('No exact match found. Showing all services.');
+  }
+}
+document.getElementById('search-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') doSearch();
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.sub-card').forEach(function(card) {
+    card.addEventListener('click', function() {
+      var name = this.querySelector('.sub-card-label').textContent.trim();
+      name = name.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+      document.querySelectorAll('.modal-overlay').forEach(function(m) {
+        m.classList.remove('open');
+      });
+      openServicePage(name);
+    });
+  });
+});
+
+let generatedOTP = '';
+let resendInterval = null;
+
+function showLoginMsg(stepId, msg, type) {
+  const el = document.getElementById(stepId);
+  el.style.display = 'block';
+  el.textContent = msg;
+  el.style.cssText = 'font-size:13px;margin-bottom:10px;padding:8px 12px;border-radius:6px;text-align:center;' +
+    (type === 'success'
+      ? 'background:#e6f7ed;color:#158a4e;border:1px solid #9adcb8;display:block'
+      : 'background:#fff0f0;color:#c0392b;border:1px solid #f5b7b7;display:block');
+}
+
+function sendOTP() {
+  const mobile = document.getElementById('login-mobile').value.trim();
+  if (mobile.length !== 10 || !/^[6-9]/.test(mobile)) {
+    showLoginMsg('login-step1-msg', 'Please enter a valid 10-digit Indian mobile number.', 'error');
+    return;
+  }
+  // Generate 6-digit OTP (demo)
+  generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+  // OTP generated - sent via SMS API
+  document.getElementById('otp-mobile-display').textContent = '+91 ' + mobile;
+  document.getElementById('login-step1').style.display = 'none';
+  document.getElementById('login-step2').style.display = 'block';
+  document.querySelectorAll('.otp-input').forEach(i => { i.value = ''; i.className = 'otp-input'; });
+  document.querySelectorAll('.otp-input')[0].focus();
+  sendSMSOTP(mobile, generatedOTP);
+  startResendTimer();
+}
+
+function otpInput(el, idx) {
+  el.value = el.value.replace(/[^0-9]/g, '');
+  if (el.value) {
+    el.classList.add('filled');
+    const next = document.querySelectorAll('.otp-input')[idx + 1];
+    if (next) next.focus();
+    // Auto verify when all 6 filled
+    const all = document.querySelectorAll('.otp-input');
+    if ([...all].every(i => i.value)) verifyOTP();
+  } else {
+    el.classList.remove('filled');
+  }
+}
+
+function otpKey(e, idx) {
+  if (e.key === 'Backspace') {
+    const inputs = document.querySelectorAll('.otp-input');
+    if (!inputs[idx].value && idx > 0) {
+      inputs[idx-1].value = '';
+      inputs[idx-1].classList.remove('filled');
+      inputs[idx-1].focus();
+    }
+  }
+}
+
+function verifyOTP() {
+  const entered = [...document.querySelectorAll('.otp-input')].map(i => i.value).join('');
+  if (entered.length < 6) {
+    showLoginMsg('login-step2-msg', 'Please enter all 6 digits of the OTP.', 'error');
+    return;
+  }
+  if (entered === generatedOTP) {
+    document.querySelectorAll('.otp-input').forEach(i => { i.classList.remove('error'); i.classList.add('filled'); });
+    showLoginMsg('login-step2-msg', '✓ Verified successfully! Logging you in...', 'success');
+    clearInterval(resendInterval);
+    setTimeout(() => {
+      // Check if service page is open BEFORE closing modal
+      const servicePageOpen = document.getElementById('service-page').style.display === 'block';
+      const mobile = document.getElementById('login-mobile').value;
+
+      // Close login modal without resetting overflow
+      document.getElementById('modal-login').classList.remove('open');
+
+      // Set login state
+      isLoggedIn = true;
+      userMobile = mobile;
+
+      // Update nav
+      document.querySelector('.nav-actions').innerHTML =
+        '<span style="font-size:14px;font-weight:500;color:#1a9e5c">✓ ' + userMobile + '</span>' +
+        '<button class="btn" onclick="logoutUser()">Log out</button>';
+
+      if (servicePageOpen) {
+        document.getElementById('service-page').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+
+        // Move to step 3 — address entry
+        document.getElementById('sp-login-prompt').style.display = 'none';
+        document.getElementById('sp-booking').style.display = 'block';
+        document.getElementById('sp-step-indicator').textContent = 'Step 3 of 3 — Enter your address';
+        document.getElementById('sp-mobile-section').style.display = 'flex';
+        document.getElementById('sp-addr-section').style.display = 'flex';
+        document.getElementById('sp-book-mobile').textContent = '+91 ' + mobile;
+
+        if (userAddress) {
+          document.getElementById('sp-book-addr-display').textContent = userAddress;
+          document.getElementById('sp-book-addr-display').style.display = 'block';
+          document.getElementById('sp-addr-input-wrap').style.display = 'none';
+          document.getElementById('sp-addr-edit').style.display = 'inline';
+          document.getElementById('sp-confirm-section').style.display = 'block';
+          const adv = Object.values(cart).reduce((s,i) => s + i.advance * i.qty, 0);
+          document.getElementById('sp-pay-btn').textContent = 'Pay ₹' + adv + ' Now';
+        }
+      } else {
+        document.body.style.overflow = '';
+      }
+    }, 1200);
+  } else {
+    document.querySelectorAll('.otp-input').forEach(i => i.classList.add('error'));
+    showLoginMsg('login-step2-msg', 'Incorrect OTP. Please try again.', 'error');
+  }
+}
+
+function startResendTimer() {
+  let secs = 30;
+  document.getElementById('resend-timer').style.display = 'inline';
+  document.getElementById('resend-btn').style.display = 'none';
+  document.getElementById('timer-count').textContent = secs;
+  clearInterval(resendInterval);
+  resendInterval = setInterval(() => {
+    secs--;
+    document.getElementById('timer-count').textContent = secs;
+    if (secs <= 0) {
+      clearInterval(resendInterval);
+      document.getElementById('resend-timer').style.display = 'none';
+      document.getElementById('resend-btn').style.display = 'inline';
+    }
+  }, 1000);
+}
+
+function resendOTP() {
+  generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+  // New OTP generated - sent via SMS API
+  document.querySelectorAll('.otp-input').forEach(i => { i.value = ''; i.className = 'otp-input'; });
+  document.querySelectorAll('.otp-input')[0].focus();
+  sendSMSOTP(document.getElementById('otp-mobile-display').textContent.replace('+91 ','').trim(), generatedOTP);
+  startResendTimer();
+}
+
+function backToMobile() {
+  document.getElementById('login-step2').style.display = 'none';
+  document.getElementById('login-step1').style.display = 'block';
+  document.getElementById('login-step1-msg').style.display = 'none';
+  clearInterval(resendInterval);
+}
+
+function sendSMSOTP(mobile, otp) {
+  const API_KEY = 'mA0CU7kB9gIdD8RpEfayv5qKbP1wjzHuTW4c3ZhnJ2LGoelrS6SAfNFgysL6vOTQrPwntKE9172qXWmJ';
+  showLoginMsg('login-step2-msg', 'Sending OTP to +91 ' + mobile + '...', 'success');
+
+  // Try server.js first, fall back to direct API
+  fetch('http://localhost:3000/send-otp?mobile=' + mobile + '&otp=' + otp)
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        showLoginMsg('login-step2-msg', '✓ OTP sent to +91 ' + mobile + '. Check your SMS.', 'success');
+      } else {
+        showLoginMsg('login-step2-msg', 'Failed: ' + (data.message || 'Try again.'), 'error');
+      }
+    })
+    .catch(() => {
+      // Server not running — call Fast2SMS directly via no-cors
+      const url = 'https://www.fast2sms.com/dev/bulkV2' +
+        '?authorization=' + API_KEY +
+        '&route=otp' +
+        '&variables_values=' + otp +
+        '&numbers=' + mobile +
+        '&flash=0';
+      fetch(url, { method: 'GET', mode: 'no-cors' })
+        .then(() => {
+          showLoginMsg('login-step2-msg', '✓ OTP sent to +91 ' + mobile + '. Check your SMS.', 'success');
+        })
+        .catch(() => {
+          showLoginMsg('login-step2-msg', '⚠ Could not send OTP. Check your internet connection.', 'error');
+        });
+    });
+}
+
+function logoutUser() {
+  isLoggedIn = false;
+  userMobile = '';
+  userAddress = '';
+  document.querySelector('.nav-actions').innerHTML =
+    '<button class="btn" onclick="openModal(\'login\')">Log in</button>';
+}
+function handleSignup(e) {
+  e.preventDefault();
+  const password = document.getElementById('signup-password').value;
+  const confirm = document.getElementById('signup-confirm').value;
+  const mobile = document.getElementById('signup-mobile').value;
+  if (mobile.length < 10) { alert('Please enter a valid 10-digit mobile number.'); return; }
+  if (password.length < 6) { alert('Password must be at least 6 characters.'); return; }
+  if (password !== confirm) { alert('Passwords do not match. Please try again.'); return; }
+  alert('Account created successfully! Welcome to ZOTO.');
+  closeModal('signup');
+}
+function switchModal(from, to) {
+  closeModal(from);
+  setTimeout(() => openModal(to), 200);
+}
+
+function selectLocationCity(city) {
+  document.getElementById('selected-city').textContent = city;
+  document.getElementById('loc-modal-city').textContent = city;
+  document.querySelectorAll('.loc-city-option').forEach(el => {
+    el.classList.toggle('active', el.textContent.trim() === city);
+  });
+  closeModal('location');
+}
+
+function showCityList() {
+  document.getElementById('loc-city-list').style.display = 'flex';
+  document.getElementById('loc-no-result').style.display = 'none';
+  document.getElementById('loc-search-input').value = '';
+}
+
+function filterCities(val) {
+  const cities = ['Chennai','Coimbatore','Bangalore'];
+  const list = document.getElementById('loc-city-list');
+  const noResult = document.getElementById('loc-no-result');
+  const filtered = cities.filter(c => c.toLowerCase().includes(val.toLowerCase()));
+  if (filtered.length === 0 || val === '') {
+    if (val === '') {
+      list.style.display = 'flex';
+      noResult.style.display = 'none';
+    } else {
+      list.style.display = 'none';
+      noResult.style.display = 'block';
+    }
+  } else {
+    list.style.display = 'flex';
+    noResult.style.display = 'none';
+    list.querySelectorAll('.loc-city-option').forEach(el => {
+      el.style.display = filtered.includes(el.textContent.trim()) ? 'flex' : 'none';
+    });
+  }
+}
+
+function detectLocation() {
+  const detecting = document.getElementById('loc-detecting');
+  const cityList = document.getElementById('loc-city-list');
+  const toast = document.getElementById('loc-toast');
+
+  detecting.style.display = 'block';
+  cityList.style.display = 'none';
+  if (toast) toast.style.display = 'none';
+
+  if (!navigator.geolocation) {
+    detecting.style.display = 'none';
+    cityList.style.display = 'flex';
+    showLocToast('Geolocation not supported. Please select a city manually.', 'error');
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    function(position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      const cities = [
+        { name: 'Chennai', lat: 13.0827, lon: 80.2707 },
+        { name: 'Coimbatore', lat: 11.0168, lon: 76.9558 },
+        { name: 'Bangalore', lat: 12.9716, lon: 77.5946 }
+      ];
+      let nearest = cities[0];
+      let minDist = Infinity;
+      cities.forEach(city => {
+        const d = Math.sqrt(Math.pow(lat - city.lat, 2) + Math.pow(lon - city.lon, 2));
+        if (d < minDist) { minDist = d; nearest = city; }
+      });
+      detecting.style.display = 'none';
+      document.getElementById('selected-city').textContent = nearest.name;
+      document.getElementById('loc-modal-city').textContent = nearest.name;
+      document.querySelectorAll('.loc-city-option').forEach(el => {
+        el.classList.toggle('active', el.textContent.trim() === nearest.name);
+      });
+      showLocToast('✓ Location detected: ' + nearest.name, 'success');
+      setTimeout(() => closeModal('location'), 1800);
+    },
+    function(error) {
+      detecting.style.display = 'none';
+      cityList.style.display = 'flex';
+      if (error.code === 1) {
+        showLocToast('Permission denied. Please allow location access or select manually.', 'error');
+      } else {
+        showLocToast('Could not detect location. Please select a city manually.', 'error');
+      }
+    },
+    { timeout: 10000 }
+  );
+}
+
+function showLocToast(msg, type) {
+  let toast = document.getElementById('loc-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'loc-toast';
+    document.getElementById('loc-modal-body').prepend(toast);
+  }
+  toast.textContent = msg;
+  toast.style.cssText = 'padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:12px;font-weight:500;' +
+    (type === 'success'
+      ? 'background:#e6f7ed;color:#158a4e;border:1px solid #9adcb8;'
+      : 'background:#fff0f0;color:#c0392b;border:1px solid #f5b7b7;');
+  toast.style.display = 'block';
+}
+
+// ── SERVICE DATA ──
+const serviceData = {
+  'AC Repair & Services': {
+    icon:'❄️', headerImg:'header-ac.jpg', rating:'4.7', reviews:'1949',
+    sections:[
+      { title:'Repair & Services', packages:[
+        { name:'AC Check-up', rating:'4.7', reviews:'330', price:266, advance:49, time:'30 mins', img:'❄️', imgUrl:'sub-ac-repair.jpg', points:['Accurate AC issue diagnosis before any repair.','Visitation fee will be adjusted in the final repair quote.'], opts:'3 options' },
+        { name:'AC Lite Service', rating:'4.7', reviews:'336', price:799, advance:149, time:'40 mins', img:'🌬️', imgUrl:'sub-ac-lite.jpg', points:['Quick AC clean for smooth cooling.','Perfect for regular maintenance.'], opts:'2 options' }
+      ]},
+      { title:'Foam Jet & Gas Refill', packages:[
+        { name:'Foam Jet AC Service', rating:'4.2', reviews:'12', price:899, advance:149, time:'60 mins', img:'💨', imgUrl:'sub-foam-jet.jpg', points:['Restores cooling with deep foam and jet cleaning.','Best for ACs with dust buildup or weak airflow.'], opts:'4 options' },
+        { name:'Gas Refill & Check-up', rating:'4.8', reviews:'386', price:2549, advance:399, time:'60 mins', img:'🧊', imgUrl:'sub-fridge-repair.jpg', points:['AC gas refill for instant cooling.','Fix leaks. Refill gas. Cool better.'], opts:'2 options' }
+      ]}
+    ]
+  },
+  'Geyser Repair & Services': {
+    icon:'🚿', headerImg:'header-ac.jpg&sat=-50', rating:'4.6', reviews:'820',
+    sections:[{ title:'Geyser Services', packages:[
+      { name:'Geyser Check-up', rating:'4.6', reviews:'210', price:199, advance:49, time:'30 mins', img:'🚿', imgUrl:'sub-geyser.jpg', points:['Diagnose heating issues.','Check thermostat & elements.'], opts:'' },
+      { name:'Geyser Repair', rating:'4.7', reviews:'310', price:499, advance:99, time:'45 mins', img:'🔧', imgUrl:'sub-geyser.jpg', points:['Fix leaks & heating failure.','Spare parts included for minor repairs.'], opts:'2 options' },
+      { name:'Geyser Installation', rating:'4.8', reviews:'300', price:399, advance:99, time:'60 mins', img:'⚙️', imgUrl:'sub-cleaning.jpg', points:['Install new geyser of any brand.','Includes pipe fitting & testing.'], opts:'' }
+    ]}]
+  },
+  'Water Purifier & Services': {
+    icon:'💧', headerImg:'header-water-purifier.jpg', rating:'4.7', reviews:'540',
+    sections:[{ title:'Water Purifier', packages:[
+      { name:'RO Service & Clean', rating:'4.7', reviews:'280', price:349, advance:99, time:'45 mins', img:'💧', imgUrl:'sub-water-purifier.jpg', points:['Full RO system cleaning & sanitisation.','Filter condition check included.'], opts:'' },
+      { name:'Filter Replacement', rating:'4.8', reviews:'260', price:599, advance:99, time:'30 mins', img:'🔄', imgUrl:'sub-cleaning.jpg', points:['Replace pre/post & RO membranes.','Improves taste and purification.'], opts:'3 options' }
+    ]}]
+  },
+  'TV Repair & Services': {
+    icon:'📺', headerImg:'header-tv.jpg', rating:'4.5', reviews:'670',
+    sections:[{ title:'TV Repair', packages:[
+      { name:'TV Check-up', rating:'4.5', reviews:'180', price:249, advance:49, time:'30 mins', img:'📺', imgUrl:'sub-tv-repair.jpg', points:['Diagnose display, sound or power issues.','Service fee adjusted in final bill.'], opts:'' },
+      { name:'TV Repair (Panel/Board)', rating:'4.6', reviews:'490', price:799, advance:149, time:'60 mins', img:'🖥️', imgUrl:'sub-tv-panel.jpg', points:['Fix panel, backlight or motherboard issues.','All major brands serviced.'], opts:'4 options' }
+    ]}]
+  },
+  'Chimney Repair & Services': {
+    icon:'🍳', headerImg:'header-chimney.jpg', rating:'4.6', reviews:'430',
+    sections:[{ title:'Chimney Services', packages:[
+      { name:'Chimney Deep Clean', rating:'4.6', reviews:'220', price:499, advance:99, time:'60 mins', img:'🍳', imgUrl:'sub-chimney.jpg', points:['Remove grease & oil buildup.','Clean filters, motor and ducts.'], opts:'' },
+      { name:'Chimney Repair', rating:'4.7', reviews:'210', price:699, advance:149, time:'45 mins', img:'🔧', imgUrl:'sub-foam-jet.jpg', points:['Fix suction, motor or sensor issues.','All brands covered.'], opts:'2 options' }
+    ]}]
+  },
+  'Gas Stove & Hob Services': {
+    icon:'🔥', headerImg:'header-chimney.jpg', rating:'4.7', reviews:'380',
+    sections:[{ title:'Gas Stove & Hob', packages:[
+      { name:'Gas Stove Repair', rating:'4.7', reviews:'200', price:299, advance:49, time:'30 mins', img:'🔥', imgUrl:'sub-chimney.jpg', points:['Fix ignition, burner or valve issues.','All brands serviced at home.'], opts:'' },
+      { name:'Hob Installation', rating:'4.8', reviews:'180', price:499, advance:99, time:'45 mins', img:'⚙️', imgUrl:'sub-geyser.jpg', points:['Install built-in hob with pipe fitting.','Safety check included.'], opts:'' }
+    ]}]
+  },
+  'Microwave Repair & Services': {
+    icon:'📡', headerImg:'header-microwave.jpg', rating:'4.5', reviews:'310',
+    sections:[{ title:'Microwave', packages:[
+      { name:'Microwave Check-up', rating:'4.5', reviews:'140', price:249, advance:49, time:'30 mins', img:'📡', imgUrl:'sub-microwave.jpg', points:['Diagnose heating or turntable issues.','Fee adjusted in repair bill.'], opts:'' },
+      { name:'Microwave Repair', rating:'4.6', reviews:'170', price:599, advance:99, time:'45 mins', img:'🔧', imgUrl:'sub-foam-jet.jpg', points:['Fix magnetron, door switch or control board.','All brands covered.'], opts:'' }
+    ]}]
+  },
+  'Refrigerator Repair & Services': {
+    icon:'🧊', headerImg:'header-fridge.jpg', rating:'4.7', reviews:'720',
+    sections:[{ title:'Refrigerator', packages:[
+      { name:'Fridge Check-up', rating:'4.7', reviews:'320', price:249, advance:49, time:'30 mins', img:'🧊', imgUrl:'sub-fridge.jpg', points:['Diagnose cooling or noise issues.','Visitation fee adjusted in bill.'], opts:'' },
+      { name:'Fridge Repair', rating:'4.8', reviews:'400', price:799, advance:149, time:'60 mins', img:'❄️', imgUrl:'sub-fridge-repair.jpg', points:['Fix compressor, thermostat or fan.','Gas refill if needed (extra).'], opts:'3 options' }
+    ]}]
+  },
+  'Washing Machine Repair': {
+    icon:'👕', headerImg:'header-washing-machine.jpg', rating:'4.6', reviews:'510',
+    sections:[{ title:'Washing Machine', packages:[
+      { name:'WM Check-up', rating:'4.6', reviews:'220', price:249, advance:49, time:'30 mins', img:'👕', imgUrl:'sub-washing-machine.jpg', points:['Diagnose drum, motor or panel issues.','Fee adjusted in repair bill.'], opts:'' },
+      { name:'WM Repair', rating:'4.7', reviews:'290', price:699, advance:149, time:'60 mins', img:'🔧', imgUrl:'sub-foam-jet.jpg', points:['Fix all front-load & top-load brands.','Drum, belt, PCB repairs included.'], opts:'2 options' }
+    ]}]
+  },
+  'Gas Pipeline Services': {
+    icon:'🔧', headerImg:'header-gas-pipeline.jpg', rating:'4.8', reviews:'290',
+    sections:[{ title:'Gas Pipeline', packages:[
+      { name:'Gas Line Inspection', rating:'4.8', reviews:'150', price:299, advance:49, time:'30 mins', img:'🔧', imgUrl:'sub-geyser.jpg', points:['Check for leaks in gas pipeline.','Safety certified technician.'], opts:'' },
+      { name:'Gas Pipeline Repair', rating:'4.8', reviews:'140', price:599, advance:99, time:'45 mins', img:'⚙️', imgUrl:'sub-cleaning.jpg', points:['Fix leaks, joints & valves.','ISI certified materials used.'], opts:'' }
+    ]}]
+  },
+  'CCTV Camera Installation & Repair': {
+    icon:'📷', headerImg:'header-cctv.jpg', rating:'4.7', reviews:'380',
+    sections:[{ title:'CCTV Services', packages:[
+      { name:'CCTV Installation (1 cam)', rating:'4.7', reviews:'200', price:699, advance:149, time:'60 mins', img:'📷', imgUrl:'sub-cctv.jpg', points:['Install 1 indoor or outdoor camera.','Wire routing & DVR setup included.'], opts:'3 options' },
+      { name:'CCTV Repair & Check-up', rating:'4.8', reviews:'180', price:349, advance:99, time:'45 mins', img:'🔧', imgUrl:'sub-foam-jet.jpg', points:['Fix connectivity, recording or display issues.','All brands serviced.'], opts:'' }
+    ]}]
+  },
+  'Full House Cleaning': {
+    icon:'🏠', headerImg:'header-house-cleaning.jpg', rating:'4.8', reviews:'1200',
+    sections:[{ title:'House Cleaning', packages:[
+      { name:'1 BHK Deep Clean', rating:'4.8', reviews:'400', price:999, advance:199, time:'3 hrs', img:'🧹', imgUrl:'sub-cleaning.jpg', points:['Full home deep clean including kitchen & bathroom.','Eco-friendly products available.'], opts:'3 options' },
+      { name:'2 BHK Deep Clean', rating:'4.8', reviews:'500', price:1499, advance:299, time:'4 hrs', img:'🏠', imgUrl:'sub-foam-jet.jpg', points:['Kitchen, bathrooms, bedrooms & hall.','Trained cleaning professionals.'], opts:'3 options' },
+      { name:'3 BHK Deep Clean', rating:'4.7', reviews:'300', price:1999, advance:399, time:'5 hrs', img:'🏡', imgUrl:'sub-3bhk.jpg', points:['Complete 3 BHK deep cleaning.','All rooms, surfaces and fixtures covered.'], opts:'3 options' }
+    ]}]
+  },
+  'Bathroom Cleaning': {
+    icon:'🚽', headerImg:'header-bathroom.jpg', rating:'4.7', reviews:'640',
+    sections:[{ title:'Bathroom Cleaning', packages:[
+      { name:'Bathroom Deep Clean', rating:'4.7', reviews:'380', price:499, advance:99, time:'60 mins', img:'🚽', imgUrl:'sub-bathroom.jpg', points:['Tiles, fixtures, toilet & floor scrubbing.','Anti-bacterial cleaning agents used.'], opts:'2 options' },
+      { name:'Bathroom Sanitisation', rating:'4.8', reviews:'260', price:299, advance:49, time:'30 mins', img:'✨', imgUrl:'sub-bathroom-sanitise.jpg', points:['Disinfect & sanitise all surfaces.','Remove stains & soap scum.'], opts:'' }
+    ]}]
+  },
+  'Kitchen Cleaning': {
+    icon:'🍽️', headerImg:'header-chimney.jpg', rating:'4.7', reviews:'590',
+    sections:[{ title:'Kitchen Cleaning', packages:[
+      { name:'Kitchen Deep Clean', rating:'4.7', reviews:'350', price:799, advance:149, time:'90 mins', img:'🍽️', imgUrl:'sub-chimney.jpg', points:['Clean chimney, stove, tiles & counters.','Degreasing of all kitchen surfaces.'], opts:'2 options' },
+      { name:'Kitchen Appliance Clean', rating:'4.6', reviews:'240', price:499, advance:99, time:'60 mins', img:'🧽', imgUrl:'sub-foam-jet.jpg', points:['Clean microwave, fridge exterior, chimney filters.','Removes grease and food stains.'], opts:'' }
+    ]}]
+  },
+  'Sofa, Carpet & Mattress Cleaning': {
+    icon:'🛋️', headerImg:'header-sofa.jpg', rating:'4.7', reviews:'480',
+    sections:[{ title:'Sofa & Carpet', packages:[
+      { name:'Sofa Shampooing', rating:'4.7', reviews:'240', price:699, advance:149, time:'60 mins', img:'🛋️', imgUrl:'sub-sofa.jpg', points:['Deep clean sofa fabric or leather.','Remove stains, odour & dust mites.'], opts:'3 options' },
+      { name:'Carpet Cleaning', rating:'4.7', reviews:'140', price:499, advance:99, time:'45 mins', img:'🧹', imgUrl:'sub-cleaning.jpg', points:['Machine wash and dry carpet.','All carpet types covered.'], opts:'2 options' },
+      { name:'Mattress Cleaning', rating:'4.8', reviews:'100', price:599, advance:99, time:'45 mins', img:'🛏️', imgUrl:'sub-mattress.jpg', points:['Vacuum, shampoo & sanitise mattress.','Remove dust mites & allergens.'], opts:'' }
+    ]}]
+  },
+  'Water Tank & Sump Cleaning': {
+    icon:'💦', headerImg:'header-gas-pipeline.jpg', rating:'4.8', reviews:'370',
+    sections:[{ title:'Tank Cleaning', packages:[
+      { name:'Overhead Tank Clean', rating:'4.8', reviews:'200', price:799, advance:149, time:'90 mins', img:'💦', imgUrl:'sub-water-purifier.jpg', points:['Empty, scrub & disinfect overhead tank.','Safe water guarantee after cleaning.'], opts:'2 options' },
+      { name:'Sump Cleaning', rating:'4.8', reviews:'170', price:1299, advance:249, time:'2 hrs', img:'🪣', imgUrl:'sub-geyser.jpg', points:['Full sump desilting and disinfection.','Pump available for water removal.'], opts:'' }
+    ]}]
+  },
+  'Marble Polishing': {
+    icon:'✨', headerImg:'header-marble.jpg', rating:'4.7', reviews:'290',
+    sections:[{ title:'Marble Polishing', packages:[
+      { name:'Marble Polish & Shine', rating:'4.7', reviews:'180', price:1499, advance:299, time:'3 hrs', img:'✨', imgUrl:'sub-marble.jpg', points:['Restore shine to dull marble floors.','Remove scratches & stains.'], opts:'2 options' },
+      { name:'Granite Polishing', rating:'4.7', reviews:'110', price:1299, advance:249, time:'2 hrs', img:'🪨', imgUrl:'sub-cleaning.jpg', points:['Deep polish for granite surfaces.','Kitchen counters & flooring.'], opts:'' }
+    ]}]
+  },
+  'Pest Control': {
+    icon:'🪲', headerImg:'header-pest.jpg', rating:'4.6', reviews:'810',
+    sections:[{ title:'Pest Control', packages:[
+      { name:'General Pest Control', rating:'4.6', reviews:'420', price:499, advance:99, time:'60 mins', img:'🪲', imgUrl:'sub-pest.jpg', points:['Treatment for ants, lizards & silverfish.','Safe for family & pets.'], opts:'3 options' },
+      { name:'Cockroach Treatment', rating:'4.7', reviews:'390', price:399, advance:99, time:'45 mins', img:'🪳', imgUrl:'sub-cleaning.jpg', points:['Gel bait treatment for cockroaches.','Effective for 3 months.'], opts:'2 options' }
+    ]}]
+  },
+  'Cockroach Control': {
+    icon:'🪳', headerImg:'header-pest.jpg', rating:'4.7', reviews:'560',
+    sections:[{ title:'Cockroach Control', packages:[
+      { name:'Gel Bait Treatment', rating:'4.7', reviews:'320', price:399, advance:99, time:'45 mins', img:'🪳', imgUrl:'sub-pest.jpg', points:['Odourless gel applied in cracks & crevices.','Works on German & American cockroaches.'], opts:'' },
+      { name:'Spray + Gel Combo', rating:'4.8', reviews:'240', price:599, advance:99, time:'60 mins', img:'💦', imgUrl:'sub-cleaning.jpg', points:['Dual treatment for severe infestations.','3-month effectiveness guaranteed.'], opts:'' }
+    ]}]
+  },
+  'Bed Bug Control': {
+    icon:'🐛', headerImg:'header-bed-bug.jpg', rating:'4.6', reviews:'310',
+    sections:[{ title:'Bed Bug Control', packages:[
+      { name:'Bed Bug Treatment', rating:'4.6', reviews:'200', price:999, advance:199, time:'90 mins', img:'🐛', imgUrl:'sub-mattress.jpg', points:['Heat + spray treatment for bed bugs.','Mattress, bed frame & headboard treated.'], opts:'2 options' },
+      { name:'Follow-up Treatment', rating:'4.7', reviews:'110', price:499, advance:99, time:'45 mins', img:'✅', imgUrl:'sub-cleaning.jpg', points:['Re-treatment for complete elimination.','Included in annual packages.'], opts:'' }
+    ]}]
+  },
+  'Rodent Control': {
+    icon:'🐭', headerImg:'header-pest.jpg', rating:'4.5', reviews:'280',
+    sections:[{ title:'Rodent Control', packages:[
+      { name:'Rodent Bait & Trap', rating:'4.5', reviews:'160', price:699, advance:149, time:'60 mins', img:'🐭', imgUrl:'sub-pest.jpg', points:['Place bait stations & glue traps.','Safe for children & pets.'], opts:'' },
+      { name:'Rodent Proofing', rating:'4.6', reviews:'120', price:999, advance:199, time:'90 mins', img:'🔧', imgUrl:'sub-geyser.jpg', points:['Seal entry points with wire mesh.','Long-term prevention solution.'], opts:'' }
+    ]}]
+  }
+};
+
+let cart = {};
+let isLoggedIn = false;
+let userMobile = '';
+let userAddress = '';
+let selectedDate = null;
+let selectedTime = null;
+
+function openServicePage(serviceName) {
+  // Normalize HTML entities from textContent
+  serviceName = serviceName.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').trim();
+  const data = serviceData[serviceName];
+  if (!data) { alert('Service details coming soon!'); return; }
+
+  cart = {};
+  selectedDate = null;
+  selectedTime = null;
+
+  // Set nav title
+  document.getElementById('sp-nav-title').textContent = serviceName;
+  document.getElementById('sp-header-title').textContent = serviceName;
+  document.getElementById('sp-header-rating').textContent = data.rating + ' (' + data.reviews + ' reviews)';
+  var imgEl = document.getElementById('sp-header-img');
+  imgEl.innerHTML = '';
+  var im = document.createElement('img');
+  im.src = data.headerImg || 'header-house-cleaning.jpg';
+  im.alt = serviceName;
+  im.style.cssText = 'width:100%;height:100%;object-fit:cover';
+  imgEl.appendChild(im);
+
+  // City from selected
+  const city = document.getElementById('selected-city').textContent;
+  document.getElementById('sp-loc-city').textContent = city;
+  document.getElementById('sp-loc-area').textContent = 'Tamil Nadu, India';
+
+  // What tabs
+  const tabs = document.getElementById('sp-what-tabs');
+  tabs.innerHTML = data.sections.map(s =>
+    '<span style="padding:5px 14px;border:1.5px solid #1a9e5c;border-radius:20px;font-size:12px;color:#1a9e5c;cursor:pointer;font-weight:500">' + s.title + '</span>'
+  ).join('');
+
+  // Packages
+  const wrap = document.getElementById('sp-packages-wrap');
+  wrap.innerHTML = '';
+  data.sections.forEach(sec => {
+    const secDiv = document.createElement('div');
+    secDiv.style.marginBottom = '20px';
+    secDiv.innerHTML = '<div><span class="sp-section-title">' + sec.title + '</span></div>';
+    const pkgDiv = document.createElement('div');
+    pkgDiv.className = 'sp-packages';
+    sec.packages.forEach((pkg, i) => {
+      const id = 'pkg_' + serviceName.replace(/[^a-z]/gi,'') + '_' + i;
+      pkgDiv.innerHTML += `
+        <div class="sp-pkg" id="card_${id}">
+          <div class="sp-pkg-img" style="overflow:hidden;border-radius:8px">${
+            pkg.imgUrl
+              ? '<img src="'+pkg.imgUrl+'" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.textContent=\'🔧\'" alt="service">'
+              : '<span style=\"font-size:36px\">'+pkg.img+'</span>'
+          }</div>
+          <div class="sp-pkg-info">
+            <div class="sp-pkg-name">${pkg.name}</div>
+            <div class="sp-pkg-rating"><span style="color:#f59e0b">★</span> ${pkg.rating} (${pkg.reviews} reviews)</div>
+            <div class="sp-pkg-price">₹${pkg.price}</div>
+            <div class="sp-pkg-time">⏱ ${pkg.time}</div>
+            <ul class="sp-pkg-points">${pkg.points.map(p=>'<li>'+p+'</li>').join('')}</ul>
+            ${pkg.opts ? '<span class="sp-show-more">Show more ›</span>' : ''}
+          </div>
+          <div class="sp-pkg-add">
+            <button class="sp-add-btn" id="add_${id}" onclick="addToCart('${id}','${pkg.name.replace(/'/g,"\'")}',${pkg.price},${pkg.advance})">Add</button>
+            <div class="sp-qty" id="qty_${id}">
+              <button class="sp-qty-btn" onclick="changeQty('${id}','${pkg.name.replace(/'/g,"\'")}',${pkg.price},${pkg.advance},-1)">−</button>
+              <span class="sp-qty-num" id="qnum_${id}">1</span>
+              <button class="sp-qty-btn" onclick="changeQty('${id}','${pkg.name.replace(/'/g,"\'")}',${pkg.price},${pkg.advance},1)">+</button>
+            </div>
+            ${pkg.opts ? '<div class="sp-pkg-opts">'+pkg.opts+'</div>' : ''}
+          </div>
+        </div>`;
+    });
+    secDiv.appendChild(pkgDiv);
+    wrap.appendChild(secDiv);
+  });
+
+  updateCartUI();
+  // Reset address UI
+  if (document.getElementById('sp-addr-input-wrap')) {
+    document.getElementById('sp-addr-input-wrap').style.display = userAddress ? 'none' : 'block';
+    document.getElementById('sp-addr-input').value = userAddress || '';
+    if (userAddress) {
+      document.getElementById('sp-book-addr-display').textContent = userAddress;
+      document.getElementById('sp-book-addr-display').style.display = 'block';
+      document.getElementById('sp-addr-edit').style.display = 'inline';
+    }
+  }
+  document.getElementById('service-page').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeServicePage() {
+  document.getElementById('service-page').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function addToCart(id, name, price, advance) {
+  cart[id] = { name, price, advance, qty: 1 };
+  document.getElementById('add_' + id).style.display = 'none';
+  const qty = document.getElementById('qty_' + id);
+  qty.classList.add('show');
+  document.getElementById('qnum_' + id).textContent = 1;
+  updateCartUI();
+}
+
+function changeQty(id, name, price, advance, delta) {
+  if (!cart[id]) return;
+  cart[id].qty += delta;
+  if (cart[id].qty <= 0) {
+    delete cart[id];
+    document.getElementById('add_' + id).style.display = '';
+    document.getElementById('qty_' + id).classList.remove('show');
+  } else {
+    document.getElementById('qnum_' + id).textContent = cart[id].qty;
+  }
+  updateCartUI();
+}
+
+function updateCartUI() {
+  const keys = Object.keys(cart);
+  const empty = document.getElementById('sp-cart-empty');
+  const items = document.getElementById('sp-cart-items');
+  const payment = document.getElementById('sp-payment');
+  const booking = document.getElementById('sp-booking');
+
+  if (keys.length === 0) {
+    empty.style.display = 'block';
+    items.style.display = 'none';
+    payment.style.display = 'none';
+    booking.style.display = 'none';
+    return;
+  }
+
+  empty.style.display = 'none';
+  items.style.display = 'block';
+  payment.style.display = 'block';
+
+  const loginPrompt = document.getElementById('sp-login-prompt');
+
+  // Step 1: Show date/time slot selection first
+  // Step 2: Then show login if not logged in
+  // Step 3: Then show address entry
+
+  if (!selectedDate || !selectedTime) {
+    // No slot selected yet — show slot selection panel
+    loginPrompt.style.display = 'none';
+    booking.style.display = 'block';
+    // Show only slot section, hide address and pay
+    document.getElementById('sp-addr-section').style.display = 'none';
+    document.getElementById('sp-confirm-section').style.display = 'none';
+    document.getElementById('sp-mobile-section').style.display = 'none';
+  } else if (!isLoggedIn) {
+    // Slot selected but not logged in — show login prompt
+    loginPrompt.style.display = 'block';
+    booking.style.display = 'none';
+  } else {
+    // Logged in — show full booking
+    loginPrompt.style.display = 'none';
+    booking.style.display = 'block';
+    document.getElementById('sp-mobile-section').style.display = 'flex';
+    document.getElementById('sp-addr-section').style.display = 'flex';
+    document.getElementById('sp-confirm-section').style.display = 'block';
+    document.getElementById('sp-book-mobile').textContent = '+91 ' + userMobile;
+    // Update pay button
+    const keys2 = Object.keys(cart);
+    const adv2 = keys2.reduce((s,k) => s + cart[k].advance * cart[k].qty, 0);
+    document.getElementById('sp-pay-btn').textContent = 'Pay ₹' + adv2 + ' Now';
+    document.getElementById('sp-pay-btn').className = 'sp-pay-btn active';
+  }
+
+  let total = 0, advance = 0;
+  items.innerHTML = keys.map(k => {
+    const i = cart[k];
+    total += i.price * i.qty;
+    advance += i.advance * i.qty;
+    return `<div class="sp-cart-item">
+      <span class="sp-cart-item-name">${i.name}</span>
+      <span class="sp-cart-item-qty">x${i.qty}</span>
+      <span class="sp-cart-item-price">₹${i.price * i.qty}</span>
+    </div>`;
+  }).join('');
+
+  const balance = total - advance;
+  document.getElementById('sp-item-total').textContent = '₹' + total;
+  document.getElementById('sp-total').textContent = '₹' + total;
+  document.getElementById('sp-advance').textContent = '₹' + advance;
+  document.getElementById('sp-pay-note').textContent = '(₹' + balance + ' payable after service)';
+  document.getElementById('sp-pay-btn').textContent = 'Pay ₹' + advance + ' Now';
+  document.getElementById('sp-pay-btn').className = 'sp-pay-btn' + (selectedDate && selectedTime ? ' active' : '');
+}
+
+// Slot picker
+function initSlotPicker() {
+  const datesEl = document.getElementById('slot-dates');
+  const timesEl = document.getElementById('slot-times');
+  const today = new Date();
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  datesEl.innerHTML = '';
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(today); d.setDate(today.getDate() + i);
+    const div = document.createElement('div');
+    div.className = 'slot-date' + (i === 0 ? ' active' : '');
+    div.innerHTML = '<div class="slot-date-day">' + days[d.getDay()] + '</div><div class="slot-date-num">' + d.getDate() + '</div>';
+    const label = days[d.getDay()] + ' ' + d.getDate();
+    div.onclick = () => {
+      document.querySelectorAll('.slot-date').forEach(x => x.classList.remove('active'));
+      div.classList.add('active');
+      selectedDate = label;
+    };
+    if (i === 0) selectedDate = label;
+    datesEl.appendChild(div);
+  }
+  const slots = ['8:00 AM','9:00 AM','10:00 AM','11:00 AM','12:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM'];
+  const disabled = ['8:00 AM','9:00 AM'];
+  timesEl.innerHTML = slots.map(t => {
+    const dis = disabled.includes(t);
+    return `<div class="slot-time${dis?' disabled':''}" onclick="selectTime(this,'${t}')">${t}</div>`;
+  }).join('');
+}
+
+function selectTime(el, time) {
+  if (el.classList.contains('disabled')) return;
+  document.querySelectorAll('.slot-time').forEach(x => x.classList.remove('active'));
+  el.classList.add('active');
+  selectedTime = time;
+}
+
+function confirmSlot() {
+  if (!selectedTime) {
+    alert('Please select a time slot.');
+    return;
+  }
+  document.getElementById('sp-slot-val').textContent = selectedDate + ' · ' + selectedTime;
+  document.getElementById('modal-slot').classList.remove('open');
+  document.body.style.overflow = 'hidden';
+
+  // Update step indicator
+  if (!isLoggedIn) {
+    // Show login prompt next
+    document.getElementById('sp-step-indicator').textContent = 'Step 2 of 3 — Login to continue';
+    document.getElementById('sp-login-prompt').style.display = 'block';
+    document.getElementById('sp-booking').style.display = 'none';
+    document.getElementById('sp-payment').style.display = Object.keys(cart).length > 0 ? 'block' : 'none';
+  } else {
+    // Already logged in, go to address
+    document.getElementById('sp-step-indicator').textContent = 'Step 3 of 3 — Enter your address';
+    document.getElementById('sp-mobile-section').style.display = 'flex';
+    document.getElementById('sp-addr-section').style.display = 'flex';
+    document.getElementById('sp-book-mobile').textContent = '+91 ' + userMobile;
+    if (userAddress) {
+      document.getElementById('sp-confirm-section').style.display = 'block';
+      const adv = Object.values(cart).reduce((s,i) => s + i.advance * i.qty, 0);
+      document.getElementById('sp-pay-btn').textContent = 'Pay ₹' + adv + ' Now';
+    }
+  }
+}
+
+function saveAddress() {
+  const val = document.getElementById('sp-addr-input').value.trim();
+  if (!val) { alert('Please enter your address.'); return; }
+  userAddress = val;
+  document.getElementById('sp-book-addr-display').textContent = val;
+  document.getElementById('sp-book-addr-display').style.display = 'block';
+  document.getElementById('sp-addr-input-wrap').style.display = 'none';
+  document.getElementById('sp-addr-edit').style.display = 'inline';
+  // Show confirm section
+  document.getElementById('sp-confirm-section').style.display = 'block';
+  document.getElementById('sp-step-indicator').textContent = '✓ All set — confirm your booking';
+  document.getElementById('sp-step-indicator').style.background = '#e6f7ed';
+  document.getElementById('sp-step-indicator').style.color = '#0F6E56';
+  const adv = Object.values(cart).reduce((s,i) => s + i.advance * i.qty, 0);
+  document.getElementById('sp-pay-btn').textContent = 'Pay ₹' + adv + ' Now';
+  document.getElementById('sp-pay-btn').className = 'sp-pay-btn active';
+}
+
+function showAddressInput() {
+  document.getElementById('sp-addr-input').value = userAddress;
+  document.getElementById('sp-addr-input-wrap').style.display = 'block';
+  document.getElementById('sp-book-addr-display').style.display = 'none';
+  document.getElementById('sp-addr-edit').style.display = 'none';
+}
+
+function checkAddressThenSlot() { openSlotPicker(); }
+
+function confirmBooking() {
+  if (!isLoggedIn) { openModal('login'); return; }
+  if (!userAddress) { alert('Please enter your address first.'); return; }
+  if (!selectedDate || !selectedTime) { alert('Please select a date & time slot first.'); return; }
+  const keys = Object.keys(cart);
+  if (keys.length === 0) { alert('Please add a service package.'); return; }
+  const total = Object.values(cart).reduce((s,i) => s + i.advance * i.qty, 0);
+
+  const svcName = document.getElementById('sp-nav-title').textContent;
+  const items = Object.values(cart).map(i => i.name + ' x' + i.qty).join(', ');
+  showBookingSuccess(svcName, items, selectedDate, selectedTime, total);
+}
+
+function showBookingSuccess(svc, items, date, time, amount) {
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center';
+  overlay.innerHTML = `
+    <div style="background:#fff;border-radius:16px;padding:32px;max-width:380px;width:90%;text-align:center">
+      <div style="width:64px;height:64px;background:#e6f7ed;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:32px">✅</div>
+      <h3 style="font-family:'Sora',sans-serif;font-size:18px;font-weight:600;margin-bottom:8px">Booking Confirmed!</h3>
+      <p style="font-size:13px;color:#888;margin-bottom:20px">Our professional will contact you shortly</p>
+      <div style="background:#f5f5f5;border-radius:10px;padding:16px;text-align:left;font-size:13px;margin-bottom:20px">
+        <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #eee"><span style="color:#888">Service</span><span style="font-weight:500">${svc}</span></div>
+        <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #eee"><span style="color:#888">Package</span><span style="font-weight:500">${items}</span></div>
+        <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #eee"><span style="color:#888">Mobile</span><span style="font-weight:500">+91 ${userMobile}</span></div>
+        <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #eee"><span style="color:#888">Address</span><span style="font-weight:500;text-align:right;max-width:180px">${userAddress}</span></div>
+        <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #eee"><span style="color:#888">Slot</span><span style="font-weight:500">${date} · ${time}</span></div>
+        <div style="display:flex;justify-content:space-between;padding:5px 0"><span style="color:#888">Advance paid</span><span style="font-weight:600;color:#1a9e5c">₹${amount}</span></div>
+      </div>
+      <button onclick="this.closest('div[style*=fixed]').remove();closeServicePage();" style="width:100%;padding:12px;background:#1a9e5c;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">Done</button>
+    </div>`;
+  document.body.appendChild(overlay);
+}
+
+// Slot opener (no recursion)
+function openSlotPicker() {
+  initSlotPicker();
+  // Make sure slot modal appears above service page
+  const slotModal = document.getElementById('modal-slot');
+  slotModal.style.zIndex = '1100';
+  slotModal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+</script>
+
+<!-- MODAL: LOGIN -->
+<div class="modal-overlay" id="modal-login">
+  <div class="modal" style="max-width:400px">
+    <div class="modal-header">
+      <h3>Log in to ZOTO</h3>
+      <button class="modal-close" onclick="closeModal('login')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <!-- STEP 1: Enter mobile -->
+      <div id="login-step1">
+        <p style="font-size:13px;color:#888;margin-bottom:20px;text-align:center">Enter your mobile number to receive an OTP</p>
+        <div class="form-group">
+          <label class="form-label">Mobile number</label>
+          <div class="input-with-icon">
+            <span class="input-icon">📱</span>
+            <span style="font-size:13px;color:#555;font-weight:500;padding-right:6px;border-right:1px solid #ddd;margin-right:6px">+91</span>
+            <input type="tel" id="login-mobile" class="form-input" placeholder="Enter 10-digit mobile number" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+          </div>
+        </div>
+        <div id="login-step1-msg" style="font-size:13px;margin-bottom:10px;display:none"></div>
+        <button class="form-btn" onclick="sendOTP()">Send OTP</button>
+      </div>
+
+      <!-- STEP 2: Enter OTP -->
+      <div id="login-step2" style="display:none">
+        <div style="text-align:center;margin-bottom:20px">
+          <div style="font-size:32px;margin-bottom:8px">📱</div>
+          <p style="font-size:14px;font-weight:500;color:#1a1a18">OTP sent to <span id="otp-mobile-display"></span></p>
+          <p style="font-size:12px;color:#999;margin-top:4px">Enter the 6-digit OTP below</p>
+        </div>
+        <div class="otp-boxes" id="otp-boxes">
+          <input class="otp-input" type="tel" maxlength="1" oninput="otpInput(this,0)" onkeydown="otpKey(event,0)">
+          <input class="otp-input" type="tel" maxlength="1" oninput="otpInput(this,1)" onkeydown="otpKey(event,1)">
+          <input class="otp-input" type="tel" maxlength="1" oninput="otpInput(this,2)" onkeydown="otpKey(event,2)">
+          <input class="otp-input" type="tel" maxlength="1" oninput="otpInput(this,3)" onkeydown="otpKey(event,3)">
+          <input class="otp-input" type="tel" maxlength="1" oninput="otpInput(this,4)" onkeydown="otpKey(event,4)">
+          <input class="otp-input" type="tel" maxlength="1" oninput="otpInput(this,5)" onkeydown="otpKey(event,5)">
+        </div>
+        <div id="login-step2-msg" style="font-size:13px;margin:10px 0;text-align:center;display:none"></div>
+        <button class="form-btn" onclick="verifyOTP()">Verify &amp; Login</button>
+        <div style="text-align:center;margin-top:14px">
+          <span id="resend-timer" style="font-size:13px;color:#999">Resend OTP in <span id="timer-count">30</span>s</span>
+          <span id="resend-btn" style="font-size:13px;color:#1a9e5c;cursor:pointer;font-weight:500;display:none" onclick="resendOTP()">Resend OTP</span>
+        </div>
+        <p style="text-align:center;margin-top:10px"><a style="font-size:13px;color:#888;cursor:pointer" onclick="backToMobile()">← Change mobile number</a></p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: SIGNUP -->
+<div class="modal-overlay" id="modal-signup">
+  <div class="modal" style="max-width:460px">
+    <div class="modal-header">
+      <h3>Create your account</h3>
+      <button class="modal-close" onclick="closeModal('signup')">✕</button>
+    </div>
+    <div class="modal-body">
+      <form onsubmit="handleSignup(event)">
+        <div class="form-group">
+          <label class="form-label">Full name</label>
+          <div class="input-with-icon">
+            <span class="input-icon">👤</span>
+            <input type="text" id="signup-name" class="form-input" placeholder="Enter your full name" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mobile number</label>
+          <div class="input-with-icon">
+            <span class="input-icon">📱</span>
+            <input type="tel" id="signup-mobile" class="form-input" placeholder="Enter your mobile number" maxlength="10" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email address</label>
+          <div class="input-with-icon">
+            <span class="input-icon">✉️</span>
+            <input type="email" id="signup-email" class="form-input" placeholder="Enter your email address" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Place / Address</label>
+          <div class="input-with-icon">
+            <span class="input-icon">📍</span>
+            <input type="text" id="signup-address" class="form-input" placeholder="Enter your place or address" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="input-with-icon">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="signup-password" class="form-input" placeholder="Create a password" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Confirm password</label>
+          <div class="input-with-icon">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="signup-confirm" class="form-input" placeholder="Re-enter your password" required>
+          </div>
+        </div>
+        <button type="submit" class="form-btn">Create account</button>
+        <p class="form-switch">Already have an account? <a onclick="switchModal('signup','login')">Log in</a></p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: LOCATION -->
+<div class="modal-overlay" id="modal-location">
+  <div class="modal loc-modal">
+    <div class="modal-header">
+      <div style="display:flex;align-items:center;gap:6px">
+        <span class="loc-modal-city" id="loc-modal-city">Chennai</span>
+        <span class="loc-modal-change" onclick="showCityList()">Change</span>
+      </div>
+      <button class="modal-close" onclick="closeModal('location')">✕</button>
+    </div>
+    <div class="modal-body" id="loc-modal-body">
+      <div class="loc-search-box">
+        <span style="color:#aaa;font-size:16px">🔍</span>
+        <input type="text" id="loc-search-input" placeholder="Search your area or landmark" oninput="filterCities(this.value)">
+      </div>
+      <div class="loc-detect-btn" onclick="detectLocation()">
+        <span class="loc-detect-icon">🎯</span>
+        Detect my location (recommended)
+      </div>
+      <div id="loc-detecting" style="display:none" class="loc-detecting">
+        <div style="font-size:24px;margin-bottom:8px">📡</div>
+        Detecting your location...
+      </div>
+      <div id="loc-city-list" class="loc-city-list">
+        <div class="loc-city-option active" onclick="selectLocationCity('Chennai')">
+          <span>📍</span> Chennai
+        </div>
+        <div class="loc-city-option" onclick="selectLocationCity('Coimbatore')">
+          <span>📍</span> Coimbatore
+        </div>
+        <div class="loc-city-option" onclick="selectLocationCity('Bangalore')">
+          <span>📍</span> Bangalore
+        </div>
+      </div>
+      <div id="loc-no-result" style="display:none" class="loc-empty">
+        <div class="loc-empty-icon">📍</div>
+        <p>We only use your location to show the most relevant prices near you</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICE DETAIL PAGE -->
+<div id="service-page">
+  <div class="sp-nav">
+    <button class="sp-back" onclick="closeServicePage()">←</button>
+    <span class="sp-nav-title" id="sp-nav-title">Service</span>
+  </div>
+  <div class="sp-body">
+    <!-- LEFT -->
+    <div class="sp-left">
+      <div class="sp-loc">
+        <span class="sp-loc-icon">📍</span>
+        <div>
+          <div class="sp-loc-city" id="sp-loc-city">Coimbatore</div>
+          <div class="sp-loc-area" id="sp-loc-area">Karamadai, Tamil Nadu, India</div>
+        </div>
+      </div>
+      <div class="sp-header">
+        <div class="sp-header-img" id="sp-header-img">❄️</div>
+        <div class="sp-header-info">
+          <div class="sp-header-title" id="sp-header-title">AC Repair &amp; Services</div>
+          <div class="sp-header-rating">
+            <span class="sp-star">★</span>
+            <span id="sp-header-rating">4.7 (1949 reviews)</span>
+          </div>
+          <div class="sp-what">What service do you need?</div>
+          <div id="sp-what-tabs" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+        </div>
+      </div>
+      <div id="sp-packages-wrap"></div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="sp-right">
+      <!-- Cart -->
+      <div class="sp-cart" id="sp-cart">
+        <div class="sp-cart-empty" id="sp-cart-empty">
+          <div class="sp-cart-icon">🛒</div>
+          <div style="font-size:13px">No package selected</div>
+        </div>
+        <div class="sp-cart-items" id="sp-cart-items"></div>
+      </div>
+
+      <!-- Payment summary -->
+      <div class="sp-payment" id="sp-payment">
+        <div class="sp-payment-title">Payment summary</div>
+        <div class="sp-pay-row"><span>Item total</span><span id="sp-item-total">₹0</span></div>
+        <div class="sp-pay-row"><span>Taxes and Fee</span><span>₹0</span></div>
+        <div class="sp-pay-row total"><span>Total</span><span id="sp-total">₹0</span></div>
+        <div class="sp-pay-row advance"><span>Advance Payment</span><span id="sp-advance">₹0</span></div>
+        <div class="sp-pay-note" id="sp-pay-note">(Balance payable after service)</div>
+      </div>
+
+      <!-- Offers -->
+      <div class="sp-offers">
+        <div class="sp-offer-item">
+          <div class="sp-offer-badge" style="background:#fff8e1">💛</div>
+          <span>Amazon cashback upto ₹500</span>
+        </div>
+        <div class="sp-offer-item">
+          <div class="sp-offer-badge" style="background:#e8f5e9">💚</div>
+          <span>CRED cashback upto ₹500</span>
+        </div>
+      </div>
+
+      <!-- Why ZOTO -->
+      <div class="sp-why">
+        <div class="sp-why-title">Why ZOTO?</div>
+        <div class="sp-why-item"><span class="sp-why-icon">✅</span> Verified &amp; vetted professionals</div>
+        <div class="sp-why-item"><span class="sp-why-icon">🎯</span> Matched to your needs</div>
+        <div class="sp-why-item"><span class="sp-why-icon">💬</span> Customer support at every step</div>
+      </div>
+
+      <!-- Booking -->
+      <!-- Login prompt (shown when not logged in) -->
+      <div id="sp-login-prompt" style="background:#fff;border:1px solid #eee;border-radius:10px;padding:20px;margin-bottom:16px;text-align:center;display:none">
+        <div style="font-size:32px;margin-bottom:8px">🔐</div>
+        <div style="font-size:14px;font-weight:600;margin-bottom:6px">Login to continue booking</div>
+        <div style="font-size:13px;color:#888;margin-bottom:14px">Please login with your mobile number to confirm your booking</div>
+        <button class="sp-slot-btn" onclick="openModal('login')">Login with OTP</button>
+      </div>
+
+      <div class="sp-booking" id="sp-booking" style="display:none">
+
+        <!-- STEP 1: Slot selection (always shown first) -->
+        <div style="background:#e6f7ed;border-radius:8px;padding:10px 12px;margin-bottom:14px;font-size:13px;color:#0F6E56;font-weight:500" id="sp-step-indicator">
+          Step 1 of 3 — Select date &amp; time
+        </div>
+
+        <div class="sp-book-section" style="flex-direction:column;align-items:flex-start;gap:8px">
+          <div style="display:flex;align-items:center;gap:10px;width:100%">
+            <div class="sp-book-icon">🕐</div>
+            <div style="flex:1">
+              <div class="sp-book-label">Slots</div>
+              <div class="sp-book-val" id="sp-slot-val">Not selected</div>
+            </div>
+          </div>
+          <div style="width:100%;padding-left:46px">
+            <button class="sp-slot-btn" onclick="openSlotPicker()">Select Date &amp; Time</button>
+          </div>
+        </div>
+
+        <!-- STEP 2: Mobile (shown after slot selected + logged in) -->
+        <div class="sp-book-section" id="sp-mobile-section" style="display:none">
+          <div class="sp-book-icon">📱</div>
+          <div>
+            <div class="sp-book-label">Send details to</div>
+            <div class="sp-book-val" id="sp-book-mobile">-</div>
+          </div>
+        </div>
+
+        <!-- STEP 3: Address (shown after login) -->
+        <div id="sp-addr-section" class="sp-book-section" style="display:none;flex-direction:column;align-items:flex-start;gap:8px">
+          <div style="display:flex;align-items:center;gap:10px;width:100%">
+            <div class="sp-book-icon">📍</div>
+            <div style="flex:1">
+              <div class="sp-book-label">Address</div>
+              <div class="sp-book-val" id="sp-book-addr-display" style="display:none"></div>
+            </div>
+            <span id="sp-addr-edit" style="font-size:12px;color:#1a9e5c;cursor:pointer;display:none" onclick="showAddressInput()">Edit</span>
+          </div>
+          <div id="sp-addr-input-wrap" style="width:100%;padding-left:46px">
+            <input type="text" id="sp-addr-input" placeholder="Enter your full address" style="width:100%;padding:9px 12px;border:1px solid #ddd;border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none">
+            <button onclick="saveAddress()" style="margin-top:8px;width:100%;padding:9px;background:#1a9e5c;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">Save Address</button>
+          </div>
+        </div>
+
+        <!-- Confirm & Pay (shown only when all steps done) -->
+        <div id="sp-confirm-section" style="display:none;border-top:1px solid #f0f0f0;margin-top:12px;padding-top:12px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+            <div class="sp-book-icon">💳</div>
+            <div class="sp-book-label">Confirm &amp; Book Now</div>
+          </div>
+          <button class="sp-pay-btn active" id="sp-pay-btn" onclick="confirmBooking()">Pay ₹0 Now</button>
+        </div>
+      </div>
+
+      <!-- Notes -->
+      <div class="sp-notes">
+        <div class="sp-notes-title">✨ Notes:</div>
+        <ul>
+          <li>The provided cost is an approximate estimate.</li>
+          <li>Final estimation will be provided after inspection.</li>
+          <li>A small advance to ensure smooth service.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLOT PICKER MODAL -->
+<div class="modal-overlay" id="modal-slot">
+  <div class="slot-modal">
+    <h3>Select Date &amp; Time</h3>
+    <div class="slot-dates" id="slot-dates"></div>
+    <div style="font-size:13px;font-weight:600;margin-bottom:10px;color:#555">Available slots</div>
+    <div class="slot-times" id="slot-times"></div>
+    <button class="slot-confirm-btn" onclick="confirmSlot()">Confirm</button>
+  </div>
+</div>
+</body>
+</html>
