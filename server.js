@@ -1,62 +1,77 @@
-const express = require('express');
+const http = require('http');
 const https = require('https');
 const url = require('url');
-const path = require('path');
 
 const API_KEY = 'mA0CU7kB9gIdD8RpEfayv5qKbP1wjzHuTW4c3ZhnJ2LGoelrS6SAfNFgysL6vOTQrPwntKE9172qXWmJ';
 const PORT = 3000;
-const app = express();
 
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use((req, res, next) => {
+const server = http.createServer((req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-});
 
-app.options('*', (req, res) => {
-  res.sendStatus(200);
-});
+  if (req.method === 'OPTIONS') { res.writeHead(200); res.end(); return; }
 
-app.get('/send-otp', (req, res) => {
-  const mobile = req.query.mobile;
-  const otp = req.query.otp;
+  const parsed = url.parse(req.url, true);
 
-  if (!mobile || !otp) {
-    return res.status(400).json({ success: false, message: 'Mobile and OTP required' });
-  }
+  if (parsed.pathname === '/send-otp') {
+    const mobile = parsed.query.mobile;
+    const otp    = parsed.query.otp;
 
-  const apiUrl = `https://www.fast2sms.com/dev/bulkV2?authorization=${API_KEY}&route=otp&variables_values=${otp}&numbers=${mobile}&flash=0`;
+    if (!mobile || !otp) {
+      res.writeHead(400, {'Content-Type':'application/json'});
+      res.end(JSON.stringify({success:false, message:'Mobile and OTP required'}));
+      return;
+    }
 
-  https.get(apiUrl, (apiRes) => {
-    let data = '';
-    apiRes.on('data', chunk => data += chunk);
-    apiRes.on('end', () => {
-      try {
-        const json = JSON.parse(data);
-        console.log('Fast2SMS response:', json);
-        if (json.return === true) {
-          res.json({ success: true, message: 'OTP sent successfully' });
-        } else {
-          res.json({ success: false, message: json.message || 'Failed to send OTP' });
+    console.log(`Sending OTP ${otp} to ${mobile}...`);
+
+    const options = {
+      hostname: 'www.fast2sms.com',
+      path: `/dev/bulkV2?authorization=${API_KEY}&route=otp&variables_values=${otp}&numbers=${mobile}&flash=0`,
+      method: 'GET',
+      headers: { 'authorization': API_KEY }
+    };
+
+    const apiReq = https.request(options, (apiRes) => {
+      let data = '';
+      apiRes.on('data', chunk => data += chunk);
+      apiRes.on('end', () => {
+        try {
+          const json = JSON.parse(data);
+          console.log('Fast2SMS response:', JSON.stringify(json));
+          if (json.return === true) {
+            res.writeHead(200, {'Content-Type':'application/json'});
+            res.end(JSON.stringify({success:true, message:'OTP sent successfully'}));
+          } else {
+            const errMsg = Array.isArray(json.message) ? json.message.join(', ') : (json.message || 'Unknown error');
+            res.writeHead(200, {'Content-Type':'application/json'});
+            res.end(JSON.stringify({success:false, message:errMsg}));
+          }
+        } catch(e) {
+          console.error('Parse error:', e, 'Raw:', data);
+          res.writeHead(500, {'Content-Type':'application/json'});
+          res.end(JSON.stringify({success:false, message:'Server parse error'}));
         }
-      } catch (e) {
-        res.status(500).json({ success: false, message: 'Server error' });
-      }
+      });
     });
-  }).on('error', (e) => {
-    console.error('API error:', e);
-    res.status(500).json({ success: false, message: 'Failed to reach SMS service' });
-  });
+
+    apiReq.on('error', (e) => {
+      console.error('HTTPS error:', e.message);
+      res.writeHead(500, {'Content-Type':'application/json'});
+      res.end(JSON.stringify({success:false, message:'Network error: ' + e.message}));
+    });
+
+    apiReq.end();
+
+  } else {
+    res.writeHead(404, {'Content-Type':'application/json'});
+    res.end(JSON.stringify({message:'Not found'}));
+  }
 });
 
-app.use((req, res) => {
-  res.status(404).json({ message: 'Not found' });
-});
-
-app.listen(PORT, () => {
-  console.log(`✅ The Prime SMS server running at http://localhost:${PORT}`);
-  console.log(`   Send OTP: http://localhost:${PORT}/send-otp?mobile=9999999999&otp=123456`);
+server.listen(PORT, () => {
+  console.log(`\n✅ ZOTO SMS Server running at http://localhost:${PORT}`);
+  console.log(`   API Key: ${API_KEY.substring(0,10)}...`);
+  console.log(`   Test: http://localhost:${PORT}/send-otp?mobile=9999999999&otp=123456\n`);
 });
